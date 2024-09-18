@@ -1,0 +1,301 @@
+{
+	"info": {
+		"_postman_id": "f5ff4f21-79c0-417f-b093-b83d49fc5ab3",
+		"name": "Petstore Final Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35319942"
+	},
+	"item": [
+		{
+			"name": "User (Operations about user)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields - code, type, and message\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData).to.have.property('code');",
+							"    pm.expect(responseData).to.have.property('type');",
+							"    pm.expect(responseData).to.have.property('message');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Type is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.type).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"id\": 0,\r\n    \"username\": \"string8888\",\r\n    \"firstName\": \"string\",\r\n    \"lastName\": \"string\",\r\n    \"email\": \"string\",\r\n    \"password\": \"string\",\r\n    \"phone\": \"string\",\r\n    \"userStatus\": 0\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Pet_Base_url}}/user/createWithList",
+					"host": [
+						"{{Pet_Base_url}}"
+					],
+					"path": [
+						"user",
+						"createWithList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user by user name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"  const responseData = pm.response.json();",
+							"",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData).to.include.all.keys('id', 'username', 'firstName', 'lastName', 'email', 'password', 'phone', 'userStatus');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Email is in a valid format\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData.email).to.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Phone number is in a valid format\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.phone).to.match(/^\\d{3}-\\d{3}-\\d{4}$/);",
+							"});",
+							"",
+							"",
+							"pm.test(\"UserStatus is a non-negative integer\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.userStatus).to.be.a('number').and.to.satisfy((userStatus) => userStatus >= 0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Pet_Base_url}}/user/string8888",
+					"host": [
+						"{{Pet_Base_url}}"
+					],
+					"path": [
+						"user",
+						"string8888"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Validate the structure of the response object\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData).to.have.property('code');",
+							"    pm.expect(responseData).to.have.property('type');",
+							"    pm.expect(responseData).to.have.property('message');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Code is a non-negative integer\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.code).to.be.a('number');",
+							"    pm.expect(responseData.code).to.be.at.least(0);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Type and message are non-empty strings\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.type).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Type should not be empty\");",
+							"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"username\": \"string8888\",\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"phone\": \"string\",\r\n  \"userStatus\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Pet_Base_url}}/user/string8888",
+					"host": [
+						"{{Pet_Base_url}}"
+					],
+					"path": [
+						"user",
+						"string8888"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Code field exists and is not empty\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.code).to.exist.and.to.not.be.empty;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Type field in the response should exist and be a string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.type).to.be.a('string');",
+							"    pm.expect(responseData.type).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message field in the response should exist\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.message).to.exist;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{Pet_Base_url}}/user/string8888",
+					"host": [
+						"{{Pet_Base_url}}"
+					],
+					"path": [
+						"user",
+						"string8888"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Pet_Base_url",
+			"value": "https://petstore.swagger.io/v2",
+			"type": "string"
+		}
+	]
+}
